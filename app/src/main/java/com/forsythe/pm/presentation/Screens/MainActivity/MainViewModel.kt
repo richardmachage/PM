@@ -98,7 +98,6 @@ class MainViewModel : ViewModel() {
                 }
                 else{
                     Log.d("Error", accessToken.value +" is "+ response.message())
-
                 }
             }
 
