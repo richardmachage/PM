@@ -1,4 +1,4 @@
-package com.forsythe.pm.presentation.Screens
+package com.forsythe.pm.presentation.Screens.RegisterScreen
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*

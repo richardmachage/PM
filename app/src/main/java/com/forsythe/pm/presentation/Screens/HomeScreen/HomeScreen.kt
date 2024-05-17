@@ -1,6 +1,5 @@
 package com.forsythe.pm.presentation.Screens.HomeScreen
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -23,7 +22,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.forsythe.pm.presentation.Screens.SignUpScreen
 import com.forsythe.pm.presentation.others.FloatingAddButton
 import com.forsythe.pm.presentation.ui.theme.PMTheme
 
