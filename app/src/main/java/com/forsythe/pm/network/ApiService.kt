@@ -4,6 +4,7 @@ import com.forsythe.pm.models.ApiResponse
 import com.forsythe.pm.models.LoginCredentials
 import com.forsythe.pm.models.LoginResponse
 import com.forsythe.pm.models.Project
+import com.forsythe.pm.models.ProjectsResponse
 import com.forsythe.pm.models.RegisterRequest
 import com.forsythe.pm.models.RegisterResponse
 import com.forsythe.pm.models.User
@@ -21,6 +22,6 @@ interface ApiService {
     fun logInUser(@Body credentials: LoginCredentials): Call<LoginResponse>
 
     @GET("projects")
-    fun listProjects(@Header("Authorization") token: String): Call<List<Project>>
+    fun listProjects(@Header("Authorization") token: String): Call<ProjectsResponse>
 
 }

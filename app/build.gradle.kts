@@ -18,6 +18,9 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
+
+
     }
 
     buildTypes {
@@ -45,6 +48,8 @@ android {
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
+
+
         }
     }
 }
@@ -69,11 +74,12 @@ dependencies {
 
 
     //Retrofit
-    //implementation(libs.re.11.0)
     //Moshi converter
     implementation(libs.retrofit)
     implementation(libs.moshiConverter)
     implementation(libs.moshiKotlin)
+    implementation(libs.kotlinReflect)
+
 
 
 

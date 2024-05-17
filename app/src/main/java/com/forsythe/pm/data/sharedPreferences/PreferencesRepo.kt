@@ -3,6 +3,7 @@ package com.forsythe.pm.data.sharedPreferences
 import android.content.Context
 import android.content.SharedPreferences
 
+const val ACCESS_TOKEN_KEY = "access_token"
 class PreferencesRepo(
     context: Context
 ) {
