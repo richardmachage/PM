@@ -66,4 +66,14 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+
+    //Retrofit
+    //implementation(libs.re.11.0)
+    //Moshi converter
+    implementation(libs.retrofit)
+    implementation(libs.moshiConverter)
+
+
+
 }
