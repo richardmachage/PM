@@ -11,7 +11,6 @@ import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -31,26 +30,33 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.forsythe.pm.presentation.ui.theme.PMTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CreateProjectScreen() {
+fun CreateProjectScreen(navController: NavController) {
     var projectName by remember { mutableStateOf("") }
     var projectDescription by remember { mutableStateOf("") }
 
+
     Scaffold(
+        containerColor = MaterialTheme.colorScheme.surface,
         topBar = {
             TopAppBar(
                 title = {
                     Text(
-                        text = "New project",
+                        text = "New Project",
                         fontSize = 20.sp,
                         fontWeight = FontWeight.Bold
                     )
                 },
                 navigationIcon = {
-                    IconButton(onClick = { /* handle close click */ }) {
+                    IconButton(onClick = {
+                    /* handle close click */
+                        navController.navigateUp()
+                    }) {
                         Icon(
                             imageVector = Icons.Default.Close,
                             contentDescription = "Close"
@@ -104,7 +110,9 @@ fun CreateProjectScreen() {
                 Spacer(modifier = Modifier.height(32.dp))
 
                 Button(
-                    onClick = { /* handle create project click */ },
+                    onClick = { /* handle create project click */
+                              navController.navigate(route = "home_screen")
+                              },
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(48.dp),
@@ -148,6 +156,6 @@ fun MyBasicBigInputTextField(
 @Composable
 fun CreateProjectPreview(){
     PMTheme {
-        CreateProjectScreen()
+        CreateProjectScreen(rememberNavController())
     }
 }

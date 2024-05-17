@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -80,6 +81,13 @@ dependencies {
     implementation(libs.moshiKotlin)
     implementation(libs.kotlinReflect)
 
+    //navigation
+    implementation(libs.composeNav)
+
+    //Compose destinations
+    /*implementation(libs.composeDestinations)
+    implementation(libs.composeDestinationsCompiler)
+    implementation(libs.ksp)*/
 
 
 

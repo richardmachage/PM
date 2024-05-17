@@ -1,6 +1,7 @@
 package com.forsythe.pm.presentation.Screens.MainActivity
 
 import android.os.Bundle
+import android.provider.DocumentsContract.Root
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -22,13 +23,19 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavGraph
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.forsythe.pm.data.sharedPreferences.ACCESS_TOKEN_KEY
 import com.forsythe.pm.data.sharedPreferences.PreferencesRepo
+import com.forsythe.pm.presentation.Screens.LogInScreen.LoginScreen
+import com.forsythe.pm.presentation.navigation.SetNavGraph
 import com.forsythe.pm.presentation.ui.theme.PMTheme
+
 
 class MainActivity : ComponentActivity() {
     val maninViewModel: MainViewModel by viewModels()
-
+    lateinit var navHostController: NavHostController
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -36,60 +43,11 @@ class MainActivity : ComponentActivity() {
         val preferencesRepo =  PreferencesRepo( context = applicationContext)
 
         setContent {
+
             PMTheme {
-                var responseMessage by remember {
-                    maninViewModel.responseMessage
-                }
-                var myToken by remember {
-                    maninViewModel.accessToken
-                }
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Column(modifier = Modifier
-                        .fillMaxSize()
-                        .padding(innerPadding),
-                        verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = Alignment.CenterHorizontally) {
-                        Button(onClick = {
-                            //register user
-                            maninViewModel.registerUser(
-                                username = "John",
-                                email = "example@gmail.com",
-                                phone = "0102030404",
-                                password = "1234567",
-                                confirmPassword = "1234567",
-                            )
-                        }) {
-                            Text(text = "Register User")
-                        }
-                        Spacer(modifier = Modifier.height(10.dp))
+                navHostController = rememberNavController()
+                SetNavGraph(navHostController = navHostController)
 
-                        Button(onClick = {
-                            //Log in user
-                            maninViewModel.logInUser(
-                                emailOrUsername = "example@gmail.com",
-                                password = "1234567",
-                                preferencesRepo = preferencesRepo
-                            )
-                        }) {
-                            Text(text = "Log in ")
-                        }
-                        Spacer(modifier = Modifier.height(10.dp))
-
-                        Button(onClick = {
-                            val accessToken = preferencesRepo.loadData(ACCESS_TOKEN_KEY)
-                            accessToken?.let {
-                                maninViewModel.fetchProjects(accessToken)
-                            }
-
-                        }) {
-                            Text(text = "Fecth Projects")
-                        }
-                        Spacer(modifier = Modifier.height(10.dp))
-
-                        Text(text = responseMessage)
-                        Text(text = myToken)
-                    }
-                }
             }
         }
     }

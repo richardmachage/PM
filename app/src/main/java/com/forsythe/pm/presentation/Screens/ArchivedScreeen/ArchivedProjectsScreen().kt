@@ -17,12 +17,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.forsythe.pm.presentation.ui.theme.PMTheme
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ArchivedProjectsScreen() {
+fun ArchivedProjectsScreen(navController: NavController) {
     val archivedProjects = listOf(
         ArchivedProject("Design Sprint: Q3 OKR Planning", 5, 2),
         ArchivedProject("Q1 2022 Roadmap", 4, 1),
@@ -122,6 +124,6 @@ data class ArchivedProject(val name: String, val tasks: Int, val sections: Int)
 @Composable
 fun ArchivedProjectPreview(){
     PMTheme {
-        ArchivedProjectsScreen()
+        ArchivedProjectsScreen(rememberNavController())
     }
 }

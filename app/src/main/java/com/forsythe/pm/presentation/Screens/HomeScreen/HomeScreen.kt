@@ -22,11 +22,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.forsythe.pm.presentation.others.FloatingAddButton
 import com.forsythe.pm.presentation.ui.theme.PMTheme
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(navController: NavController) {
     val projects = listOf(
         Project("Product Launch 2023", "Due 2/28/23"),
         Project("Data Center Expansion", "Due 12/30/22"),
@@ -36,7 +38,10 @@ fun HomeScreen() {
 
     Scaffold(
         floatingActionButton = {
-            FloatingAddButton(onClick = { /* handle add project click */ })
+            FloatingAddButton(onClick = {
+            /* handle add project click */
+            navController.navigate(route = "new_project_screen")
+            })
         }
     ) {
         Column(
@@ -99,6 +104,6 @@ data class Project(val name: String, val dueDate: String)
 @Composable
 fun HomePreview(){
     PMTheme {
-        HomeScreen()
+        HomeScreen(rememberNavController())
     }
 }
