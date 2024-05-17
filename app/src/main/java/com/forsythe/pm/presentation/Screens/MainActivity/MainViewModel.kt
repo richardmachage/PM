@@ -43,4 +43,8 @@ class MainViewModel : ViewModel() {
             }
         })
     }
+
+    fun logInUser(){
+
+    }
 }
