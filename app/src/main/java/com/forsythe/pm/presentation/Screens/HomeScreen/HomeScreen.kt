@@ -8,12 +8,16 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.ArrowForward
+import androidx.compose.material.icons.filled.List
 import androidx.compose.material3.Divider
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -27,6 +31,7 @@ import androidx.navigation.compose.rememberNavController
 import com.forsythe.pm.presentation.others.FloatingAddButton
 import com.forsythe.pm.presentation.ui.theme.PMTheme
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(navController: NavController) {
     val projects = listOf(
@@ -42,6 +47,22 @@ fun HomeScreen(navController: NavController) {
             /* handle add project click */
             navController.navigate(route = "new_project_screen")
             })
+        },
+        topBar = {
+            TopAppBar(
+                title = { Text(text = "Home") },
+                actions = {
+                    IconButton(onClick = { /*TODO*/ }) {
+                        //got o account
+                        Icon(imageVector = Icons.Default.AccountCircle, contentDescription = "account")
+                    }
+                    IconButton(onClick = { /*TODO*/ }) {
+                        //go to archived
+                        Icon(imageVector = Icons.Filled.List, contentDescription = "Archive")
+                    }
+
+                }
+            )
         }
     ) {
         Column(
@@ -53,7 +74,7 @@ fun HomeScreen(navController: NavController) {
                 text = "My Projects",
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(start = 1.dp,16.dp)
+                modifier = Modifier.padding(start = 10.dp,16.dp)
             )
 
 
