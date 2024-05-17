@@ -73,6 +73,7 @@ dependencies {
     //Moshi converter
     implementation(libs.retrofit)
     implementation(libs.moshiConverter)
+    implementation(libs.moshiKotlin)
 
 
 

@@ -9,6 +9,7 @@ lifecycleRuntimeKtx = "2.8.0"
 activityCompose = "1.9.0"
 composeBom = "2023.08.00"
 retrofit = "2.11.0"
+moshiKotlin = "1.15.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -28,6 +29,7 @@ androidx-material3 = { group = "androidx.compose.material3", name = "material3" 
 
 retrofit = { module = "com.squareup.retrofit2:retrofit", name = "retrofit",version.ref = "retrofit" }
 moshiConverter = { module = "com.squareup.retrofit2:converter-moshi", name = "moshiConverter", version.ref = "retrofit" }
+moshiKotlin = {module = "com.squareup.moshi:moshi-kotlin", name = "moshiKotlin", version.ref = "moshiKotlin"}
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
