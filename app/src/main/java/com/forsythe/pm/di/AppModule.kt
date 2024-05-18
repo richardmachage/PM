@@ -20,7 +20,6 @@ object AppModule{
     fun providesContext(@ApplicationContext context: Context) : Context{
         return context
     }
-
     @Provides
     @Singleton
     fun providesPreferencesRepo(context: Context): PreferencesRepo{

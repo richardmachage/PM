@@ -33,10 +33,12 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.forsythe.pm.presentation.ui.theme.PMTheme
+import com.ramcosta.composedestinations.annotation.Destination
 
 @OptIn(ExperimentalMaterial3Api::class)
+@Destination
 @Composable
-fun CreateProjectScreen(navController: NavController) {
+fun CreateProjectScreen() {
     var projectName by remember { mutableStateOf("") }
     var projectDescription by remember { mutableStateOf("") }
 
@@ -55,7 +57,7 @@ fun CreateProjectScreen(navController: NavController) {
                 navigationIcon = {
                     IconButton(onClick = {
                     /* handle close click */
-                        navController.navigateUp()
+                       // navController.navigateUp()
                     }) {
                         Icon(
                             imageVector = Icons.Default.Close,
@@ -111,7 +113,7 @@ fun CreateProjectScreen(navController: NavController) {
 
                 Button(
                     onClick = { /* handle create project click */
-                              navController.navigate(route = "home_screen")
+                    //          navController.navigate(route = "home_screen")
                               },
                     modifier = Modifier
                         .fillMaxWidth()
@@ -156,6 +158,6 @@ fun MyBasicBigInputTextField(
 @Composable
 fun CreateProjectPreview(){
     PMTheme {
-        CreateProjectScreen(rememberNavController())
+        //CreateProjectScreen(rememberNavController())
     }
 }

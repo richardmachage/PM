@@ -29,14 +29,16 @@ import androidx.navigation.compose.rememberNavController
 import com.forsythe.pm.data.sharedPreferences.ACCESS_TOKEN_KEY
 import com.forsythe.pm.data.sharedPreferences.PreferencesRepo
 import com.forsythe.pm.presentation.Screens.LogInScreen.LoginScreen
+import com.forsythe.pm.presentation.Screens.NavGraphs
 import com.forsythe.pm.presentation.navigation.SetNavGraph
 import com.forsythe.pm.presentation.ui.theme.PMTheme
+import com.ramcosta.composedestinations.DestinationsNavHost
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     val maninViewModel: MainViewModel by viewModels()
-    lateinit var navHostController: NavHostController
+    //lateinit var navHostController: NavHostController
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -46,9 +48,9 @@ class MainActivity : ComponentActivity() {
         setContent {
 
             PMTheme {
-                navHostController = rememberNavController()
-                SetNavGraph(navHostController = navHostController)
-
+               // navHostController = rememberNavController()
+                //SetNavGraph(navHostController = navHostController)
+                DestinationsNavHost(navGraph = NavGraphs.root)
             }
         }
     }

@@ -92,7 +92,8 @@ dependencies {
     //navigation
     implementation(libs.composeNav)
 
-
+    //viewmodel compose
+    implementation(libs.viewmodelCompose)
 
     //hilt
     implementation(libs.hiltAndroid)
@@ -104,9 +105,8 @@ dependencies {
 
 
     //Compose destinations
-    /*implementation(libs.composeDestinations)
-    implementation(libs.composeDestinationsCompiler)
-    implementation(libs.ksp)*/
+    implementation(libs.composeDestinations)
+    ksp(libs.composeDestCompiler)
 
 
 

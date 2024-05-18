@@ -1,10 +1,7 @@
 package com.forsythe.pm.presentation.Screens.LogInScreen
 
-import android.util.Log
-import androidx.compose.runtime.getValue
+import android.content.Context
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.forsythe.pm.data.sharedPreferences.ACCESS_TOKEN_KEY
 import com.forsythe.pm.data.sharedPreferences.PreferencesRepo
@@ -21,9 +18,9 @@ import javax.inject.Inject
 
 @HiltViewModel
  class LoginViewModel @Inject constructor(
-     @ApplicationContext context: ApplicationContext,
-     private val preferencesRepo: PreferencesRepo
+     @ApplicationContext private val context: Context
  ) : ViewModel() {
+     val preferencesRepo = PreferencesRepo(context)
     var usernameOrEmail = mutableStateOf("")
     var password = mutableStateOf("")
     var toastMessage = mutableStateOf("")

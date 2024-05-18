@@ -20,11 +20,13 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.forsythe.pm.presentation.ui.theme.PMTheme
+import com.ramcosta.composedestinations.annotation.Destination
 
 
 @OptIn(ExperimentalMaterial3Api::class)
+@Destination
 @Composable
-fun ArchivedProjectsScreen(navController: NavController) {
+fun ArchivedProjectsScreen() {
     val archivedProjects = listOf(
         ArchivedProject("Design Sprint: Q3 OKR Planning", 5, 2),
         ArchivedProject("Q1 2022 Roadmap", 4, 1),
@@ -124,6 +126,6 @@ data class ArchivedProject(val name: String, val tasks: Int, val sections: Int)
 @Composable
 fun ArchivedProjectPreview(){
     PMTheme {
-        ArchivedProjectsScreen(rememberNavController())
+        //ArchivedProjectsScreen(rememberNavController())
     }
 }

@@ -15,10 +15,10 @@ fun SetNavGraph(
     navHostController : NavHostController
 ){
    NavHost(navController = navHostController, startDestination ="login_screen" ) {
-       composable(route = "login_screen"){ LoginScreen(navHostController)}
-       composable(route = "signup_screen"){ SignUpScreen(navHostController) }
-       composable(route = "home_screen"){ HomeScreen(navHostController) }
-       composable(route = "new_project_screen"){ CreateProjectScreen(navHostController) }
-       composable(route = "archived_screen"){ ArchivedProjectsScreen(navHostController) }
+      /* composable(route = "login_screen"){ LoginScreen()}
+       composable(route = "signup_screen"){ SignUpScreen() }
+       composable(route = "home_screen"){ HomeScreen() }
+       composable(route = "new_project_screen"){ CreateProjectScreen() }
+       composable(route = "archived_screen"){ ArchivedProjectsScreen() }*/
    }
 }

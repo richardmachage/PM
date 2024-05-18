@@ -5,6 +5,7 @@ import android.util.Log
 import android.util.Patterns
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import com.forsythe.pm.data.sharedPreferences.PreferencesRepo
 import com.forsythe.pm.models.RegisterRequest
 import com.forsythe.pm.models.RegisterResponse
 import com.forsythe.pm.network.ApiService
@@ -18,7 +19,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
-    @ApplicationContext private val context:Context
+    @ApplicationContext private val context:Context,
 ) : ViewModel() {
     var username = mutableStateOf("")
     var email =  mutableStateOf("")

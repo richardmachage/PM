@@ -35,11 +35,18 @@ import androidx.core.content.pm.ShortcutInfoCompat.Surface
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import com.forsythe.pm.presentation.Screens.destinations.HomeScreenDestination
+import com.forsythe.pm.presentation.Screens.destinations.SignUpScreenDestination
 import com.forsythe.pm.presentation.others.MyCircularProgressBar
+import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
+@Destination(start = true)
 @Composable
 fun LoginScreen(
-    navController: NavController
+    //navController: NavController = rememberNavController()
+    navigator: DestinationsNavigator
 ) {
     val viewModel : LoginViewModel = hiltViewModel()
     val context = LocalContext.current
@@ -54,7 +61,8 @@ fun LoginScreen(
 
     LaunchedEffect (viewModel.performNavigation.value){
         if (viewModel.performNavigation.value.isNotBlank()){
-            navController.navigate(route = "home_screen")
+           // navController.navigate(route = "home_screen")
+            navigator.navigate(HomeScreenDestination)
             viewModel.performNavigation.value = ""
         }
     }
@@ -145,7 +153,8 @@ fun LoginScreen(
             Spacer(modifier = Modifier.height(32.dp))
 
             TextButton(onClick = {
-                navController.navigate(route = "signup_screen")
+                //navController.navigate(route = "signup_screen")
+                navigator.navigate(SignUpScreenDestination)
             }) {
                 Text(
                     text = "New user? Sign Up",

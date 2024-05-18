@@ -31,10 +31,12 @@ import androidx.navigation.compose.rememberNavController
 import com.forsythe.pm.presentation.others.MyBasicInputTextField
 import com.forsythe.pm.presentation.others.MyCircularProgressBar
 import com.forsythe.pm.presentation.ui.theme.PMTheme
+import com.ramcosta.composedestinations.annotation.Destination
 
-
+@Destination
 @Composable
-fun SignUpScreen(navController: NavController) {
+fun SignUpScreen(
+) {
     val viewModel : SignUpViewModel = hiltViewModel()
     val context = LocalContext.current
 
@@ -58,7 +60,7 @@ fun SignUpScreen(navController: NavController) {
             IconButton(
                 onClick = {
                     //handle back click
-                    navController.navigateUp()
+                    //navController.navigateUp()
                 },
                 modifier = Modifier
                     .align(Alignment.Start)
@@ -138,6 +140,6 @@ fun SignUpScreen(navController: NavController) {
 @Composable
 fun SignUpPreview() {
     PMTheme {
-        SignUpScreen(rememberNavController())
+       // SignUpScreen(rememberNavController())
     }
 }

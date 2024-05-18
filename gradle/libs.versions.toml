@@ -7,15 +7,16 @@ junitVersion = "1.1.5"
 espressoCore = "3.5.1"
 lifecycleRuntimeKtx = "2.8.0"
 activityCompose = "1.9.0"
-composeBom = "2023.08.00"
+composeBom = "2024.05.00"
 retrofit = "2.11.0"
 moshiKotlin = "1.15.1"
 kotlinReflect = "1.6.0"
 ksp = "1.9.0-1.0.13"
 navVersion = "2.7.7"
-
+viewmodelCompose = "2.8.0"
 hilt = "2.50"
-hiltNavigation = "1.1.0"
+hiltNavigation = "1.2.0"
+composeDestinations = "1.10.2"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -38,6 +39,10 @@ moshiConverter = { module = "com.squareup.retrofit2:converter-moshi", name = "mo
 moshiKotlin = {module = "com.squareup.moshi:moshi-kotlin", name = "moshiKotlin", version.ref = "moshiKotlin"}
 kotlinReflect = {module = "com.squareup.moshi:moshi-kotlin", name="kotlinReflection", version.ref = "kotlinReflect"}
 
+#compose destinations
+composeDestinations = {module = "io.github.raamcosta.compose-destinations:core", name= "composeDestinations", version.ref = "composeDestinations"}
+composeDestCompiler = {module = "io.github.raamcosta.compose-destinations:ksp", name = "composeDesrtCompiler", version.ref = "composeDestinations" }
+
 #Hilt
 hiltCompiler = {module = "com.google.dagger:hilt-android-compiler", name="hiltCompiler", version.ref="hilt"} #kapt
 hiltAndroid = {module ="com.google.dagger:hilt-android", name="hiltAndroid", version.ref = "hilt"}
@@ -46,6 +51,10 @@ ksp = { module = "com.google.devtools.ksp:symbol-processing-api", version.ref = 
 
 #compose navigation
 composeNav = {module = "androidx.navigation:navigation-compose", name="composeNavigation", version.ref="navVersion"}
+
+#compose viewModel
+viewmodelCompose = {module = "androidx.lifecycle:lifecycle-viewmodel-compose", name= "viewmodelCompose", version.ref="viewmodelCompose"}
+
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
