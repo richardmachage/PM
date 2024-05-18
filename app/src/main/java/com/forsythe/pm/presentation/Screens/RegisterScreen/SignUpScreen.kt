@@ -24,21 +24,19 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.forsythe.pm.presentation.others.MyBasicInputTextField
+import com.forsythe.pm.presentation.others.MyCircularProgressBar
 import com.forsythe.pm.presentation.ui.theme.PMTheme
 
 
 @Composable
 fun SignUpScreen(navController: NavController) {
-    val viewModel : SignUpViewModel = viewModel()
+    val viewModel : SignUpViewModel = hiltViewModel()
     val context = LocalContext.current
-    var username by remember { mutableStateOf("") }
-    var email by remember { mutableStateOf("") }
-    var phoneNumber by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
 
     LaunchedEffect(viewModel.toastMessage.value) {
         val message = viewModel.toastMessage.value
@@ -48,6 +46,7 @@ fun SignUpScreen(navController: NavController) {
         }
     }
     Surface {
+        MyCircularProgressBar(isLoading = viewModel.isLoading.value)
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -67,48 +66,50 @@ fun SignUpScreen(navController: NavController) {
             ) {
                 Icon(imageVector = Icons.Filled.ArrowBack, contentDescription = "")
             }
-            /* Text(
-            text = "←",
-            modifier = Modifier
-                .align(Alignment.Start)
-                .clickable { *//* handle back click *//* },
-            fontSize = 24.sp
-        )*/
 
-            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(10.dp))
 
             MyBasicInputTextField(
-                value = username,
-                onValueChange = { username = it },
+                value = viewModel.username.value,
+                onValueChange = { viewModel.username.value = it },
                 placeholder = "Username"
             )
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(10.dp))
 
             MyBasicInputTextField(
-                value = email,
-                onValueChange = { email = it },
+                value = viewModel.email.value,
+                onValueChange = { viewModel.email.value = it },
                 placeholder = "Email"
             )
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(10.dp))
 
             MyBasicInputTextField(
-                value = phoneNumber,
-                onValueChange = { phoneNumber = it },
+                value = viewModel.phoneNumber.value,
+                onValueChange = { viewModel.phoneNumber.value = it },
                 placeholder = "Phone number"
             )
 
             Spacer(modifier = Modifier.height(16.dp))
 
             MyBasicInputTextField(
-                value = password,
-                onValueChange = { password = it },
+                value = viewModel.password.value,
+                onValueChange = { viewModel.password.value = it },
                 placeholder = "Password",
                 isPassword = true
             )
 
-            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(10.dp))
+
+            MyBasicInputTextField(
+                value = viewModel.confirmPassword.value,
+                onValueChange = { viewModel.confirmPassword.value = it },
+                placeholder = "Confirm password",
+                isPassword = true
+            )
+
+            Spacer(modifier = Modifier.height(10.dp))
 
             Button(
                 onClick = { /* handle sign up click */

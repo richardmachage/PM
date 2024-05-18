@@ -97,7 +97,7 @@ class SignUpViewModel @Inject constructor(
             return false
         }
 
-        if (password != confirmPassword) {
+        if (password.value != confirmPassword.value) {
             toastMessage.value = "Passwords do not match"
             return false
         }

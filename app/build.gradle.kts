@@ -79,6 +79,8 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
+   // implementation(libs.animation)
+
 
     //Retrofit
     //Moshi converter
@@ -94,9 +96,9 @@ dependencies {
 
     //hilt
     implementation(libs.hiltAndroid)
-//    implementation(libs.hiltCompiler)
-
-    //ksp
+    //hilt viewmodel
+    implementation(libs.hiltNavigation)
+    //ksp hilt compiler
     ksp(libs.hiltCompiler)
 
 

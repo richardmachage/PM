@@ -15,6 +15,7 @@ ksp = "1.9.0-1.0.13"
 navVersion = "2.7.7"
 
 hilt = "2.50"
+hiltNavigation = "1.1.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -31,7 +32,7 @@ androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-toolin
 androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
-
+animation = {module = "androidx.compose.animation:animation", name = "animation", version = "1.4.3"}
 retrofit = { module = "com.squareup.retrofit2:retrofit", name = "retrofit",version.ref = "retrofit" }
 moshiConverter = { module = "com.squareup.retrofit2:converter-moshi", name = "moshiConverter", version.ref = "retrofit" }
 moshiKotlin = {module = "com.squareup.moshi:moshi-kotlin", name = "moshiKotlin", version.ref = "moshiKotlin"}
@@ -40,7 +41,7 @@ kotlinReflect = {module = "com.squareup.moshi:moshi-kotlin", name="kotlinReflect
 #Hilt
 hiltCompiler = {module = "com.google.dagger:hilt-android-compiler", name="hiltCompiler", version.ref="hilt"} #kapt
 hiltAndroid = {module ="com.google.dagger:hilt-android", name="hiltAndroid", version.ref = "hilt"}
-
+hiltNavigation = {module = "androidx.hilt:hilt-navigation-compose", name = "hiltNavigation", version.ref = "hiltNavigation"}
 ksp = { module = "com.google.devtools.ksp:symbol-processing-api", version.ref = "ksp" } # Update to the latest version
 
 #compose navigation
