@@ -31,8 +31,9 @@ import com.forsythe.pm.data.sharedPreferences.PreferencesRepo
 import com.forsythe.pm.presentation.Screens.LogInScreen.LoginScreen
 import com.forsythe.pm.presentation.navigation.SetNavGraph
 import com.forsythe.pm.presentation.ui.theme.PMTheme
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     val maninViewModel: MainViewModel by viewModels()
     lateinit var navHostController: NavHostController
