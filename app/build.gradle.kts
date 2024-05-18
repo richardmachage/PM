@@ -1,7 +1,15 @@
+import org.jetbrains.kotlin.gradle.internal.Kapt3GradleSubplugin.Companion.isKaptVerbose
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.hilt) //hilt
+
+
+
+
+
 }
 
 android {
@@ -19,8 +27,6 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
-
-
 
     }
 
@@ -83,6 +89,17 @@ dependencies {
 
     //navigation
     implementation(libs.composeNav)
+
+
+
+    //hilt
+    implementation(libs.hiltAndroid)
+//    implementation(libs.hiltCompiler)
+
+    //ksp
+    ksp(libs.hiltCompiler)
+
+
 
     //Compose destinations
     /*implementation(libs.composeDestinations)
