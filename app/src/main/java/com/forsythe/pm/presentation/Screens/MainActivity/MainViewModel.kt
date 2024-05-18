@@ -35,6 +35,7 @@ class MainViewModel : ViewModel() {
         val registerRequest = RegisterRequest(username,email,phone,password,confirmPassword)
         val call = apiService.registerUser(registerRequest)
 
+
         call.enqueue(object : Callback<RegisterResponse> {
             override fun onResponse(call: Call<RegisterResponse>, response: Response<RegisterResponse>) {
                 if (response.isSuccessful && response.body() != null){

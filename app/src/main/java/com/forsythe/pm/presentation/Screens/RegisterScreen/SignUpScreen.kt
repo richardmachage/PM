@@ -1,5 +1,6 @@
 package com.forsythe.pm.presentation.Screens.RegisterScreen
 
+import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
@@ -11,6 +12,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -18,9 +20,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.forsythe.pm.presentation.others.MyBasicInputTextField
@@ -29,14 +33,21 @@ import com.forsythe.pm.presentation.ui.theme.PMTheme
 
 @Composable
 fun SignUpScreen(navController: NavController) {
+    val viewModel : SignUpViewModel = viewModel()
+    val context = LocalContext.current
     var username by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var phoneNumber by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
+    LaunchedEffect(viewModel.toastMessage.value) {
+        val message = viewModel.toastMessage.value
+        if (message.isNotBlank()){
+            Toast.makeText(context,message,Toast.LENGTH_SHORT).show()
+            viewModel.toastMessage.value = ""
+        }
+    }
     Surface {
-
-
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -50,7 +61,9 @@ fun SignUpScreen(navController: NavController) {
                     //handle back click
                     navController.navigateUp()
                 },
-                modifier = Modifier.align(Alignment.Start). padding(top = 10.dp)
+                modifier = Modifier
+                    .align(Alignment.Start)
+                    .padding(top = 10.dp)
             ) {
                 Icon(imageVector = Icons.Filled.ArrowBack, contentDescription = "")
             }
@@ -98,7 +111,9 @@ fun SignUpScreen(navController: NavController) {
             Spacer(modifier = Modifier.height(32.dp))
 
             Button(
-                onClick = { /* handle sign up click */ },
+                onClick = { /* handle sign up click */
+                          viewModel.onSignUp()
+                          },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(48.dp)
