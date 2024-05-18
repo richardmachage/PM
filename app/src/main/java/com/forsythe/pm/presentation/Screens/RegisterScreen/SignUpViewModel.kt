@@ -60,6 +60,7 @@ class SignUpViewModel @Inject constructor(
 
 
             }catch (e:Exception){
+                isLoading.value = false
                 toastMessage.value = "Failed to register user ${e.message}"
             }
         }

@@ -1,5 +1,6 @@
 package com.forsythe.pm.presentation.Screens.LogInScreen
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -16,6 +17,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -23,22 +25,42 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.pm.ShortcutInfoCompat.Surface
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
+import com.forsythe.pm.presentation.others.MyCircularProgressBar
 
 @Composable
 fun LoginScreen(
     navController: NavController
 ) {
-    var username by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
+    val viewModel : LoginViewModel = hiltViewModel()
+    val context = LocalContext.current
+
+    LaunchedEffect (viewModel.toastMessage.value){
+        val  message = viewModel.toastMessage.value
+        if (message.isNotBlank()){
+            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+            viewModel.toastMessage.value = ""
+        }
+    }
+
+    LaunchedEffect (viewModel.performNavigation.value){
+        if (viewModel.performNavigation.value.isNotBlank()){
+            navController.navigate(route = "home_screen")
+            viewModel.performNavigation.value = ""
+        }
+    }
 
     Surface {
+        MyCircularProgressBar(isLoading = viewModel.isLoading.value)
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -54,9 +76,9 @@ fun LoginScreen(
 
             Spacer(modifier = Modifier.height(32.dp))
 
-            BasicTextField(
-                value = username,
-                onValueChange = { username = it },
+            BasicTextField( // Input Username
+                value = viewModel.usernameOrEmail.value,
+                onValueChange = { viewModel.usernameOrEmail.value = it },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(8.dp)
@@ -64,8 +86,8 @@ fun LoginScreen(
                     .padding(16.dp),
                 singleLine = true,
                 decorationBox = { innerTextField ->
-                    if (username.isEmpty()) {
-                        Text(text = "username", color = Color.Gray)
+                    if (viewModel.usernameOrEmail.value.isEmpty()) {
+                        Text(text = "username or email", color = Color.Gray)
                     }
                     innerTextField()
                 }
@@ -73,9 +95,10 @@ fun LoginScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            BasicTextField(
-                value = password,
-                onValueChange = { password = it },
+
+            BasicTextField( // input Password
+                value = viewModel.password.value,
+                onValueChange = { viewModel.password.value = it },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(8.dp)
@@ -84,7 +107,7 @@ fun LoginScreen(
                 singleLine = true,
                 visualTransformation = PasswordVisualTransformation(),
                 decorationBox = { innerTextField ->
-                    if (password.isEmpty()) {
+                    if (viewModel.password.value.isEmpty()) {
                         Text(text = "Password", color = Color.Gray)
                     }
                     innerTextField()
@@ -93,7 +116,8 @@ fun LoginScreen(
 
 
 
-            TextButton(onClick = {
+            TextButton( //Forgotten Password
+                onClick = {
             }, modifier = Modifier
                 .align(Alignment.End)
                 )
@@ -108,7 +132,9 @@ fun LoginScreen(
 
             Button(
                 //Log in button
-                onClick = { navController.navigate(route = "home_screen") },
+                onClick = {
+                          viewModel.onLogIn()
+                          },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(48.dp)
