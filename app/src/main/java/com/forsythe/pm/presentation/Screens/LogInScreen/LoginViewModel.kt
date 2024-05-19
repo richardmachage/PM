@@ -17,10 +17,10 @@ import retrofit2.Response
 import javax.inject.Inject
 
 @HiltViewModel
- class LoginViewModel @Inject constructor(
-     @ApplicationContext private val context: Context
- ) : ViewModel() {
-     val preferencesRepo = PreferencesRepo(context)
+class LoginViewModel @Inject constructor(
+    @ApplicationContext private val context: Context
+) : ViewModel() {
+    val preferencesRepo = PreferencesRepo(context)
     var usernameOrEmail = mutableStateOf("")
     var password = mutableStateOf("")
     var toastMessage = mutableStateOf("")
@@ -30,19 +30,28 @@ import javax.inject.Inject
 
     private val apiService = RetrofitClient.getInstance().create(ApiService::class.java)
 
-    fun onLogIn(){
-        if (validateInputs()){
+    fun onLogIn() {
+        if (validateInputs()) {
             try {
                 isLoading.value = true
-                val loginCredentials = LoginCredentials(username_or_email = usernameOrEmail.value, password = password.value )
-                val call  = apiService.logInUser(loginCredentials)
+                val loginCredentials = LoginCredentials(
+                    username_or_email = usernameOrEmail.value,
+                    password = password.value
+                )
+                val call = apiService.logInUser(loginCredentials)
 
                 call.enqueue(object : Callback<LoginResponse> {
-                    override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
-                        if (response.isSuccessful && response.body() != null){
-                           // Log.d("Log in User", "Success: ${response.body()!!.message}")
+                    override fun onResponse(
+                        call: Call<LoginResponse>,
+                        response: Response<LoginResponse>
+                    ) {
+                        if (response.isSuccessful && response.body() != null) {
+                            // Log.d("Log in User", "Success: ${response.body()!!.message}")
                             val responseData = response.body()!!.data
-                            preferencesRepo.saveData(ACCESS_TOKEN_KEY, responseData.access_token) //save token securely to preferences
+                            preferencesRepo.saveData(
+                                ACCESS_TOKEN_KEY,
+                                responseData.access_token
+                            ) //save token securely to preferences
                             isLoading.value = false
                             performNavigation.value = "yes" //navigate to home
                         }
@@ -54,8 +63,7 @@ import javax.inject.Inject
                     }
 
                 })
-            }
-            catch (e:Exception){
+            } catch (e: Exception) {
                 isLoading.value = false
                 toastMessage.value = "Failed to log in: ${e.localizedMessage}"
             }
@@ -63,7 +71,7 @@ import javax.inject.Inject
 
     }
 
-    private fun validateInputs():Boolean{
+    private fun validateInputs(): Boolean {
         if (usernameOrEmail.value.isBlank()) {
             toastMessage.value = "Username cannot be blank"
             return false

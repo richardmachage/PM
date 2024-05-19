@@ -1,5 +1,6 @@
 package com.forsythe.pm.presentation.Screens.HomeScreen
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -17,8 +18,11 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -29,38 +33,49 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.forsythe.pm.presentation.Screens.AccountScreen.AccountScreen
+import com.forsythe.pm.presentation.Screens.destinations.AccountScreenDestination
+import com.forsythe.pm.presentation.Screens.destinations.ArchivedProjectsScreenDestination
+import com.forsythe.pm.presentation.Screens.destinations.CreateProjectScreenDestination
 import com.forsythe.pm.presentation.others.FloatingAddButton
 import com.forsythe.pm.presentation.ui.theme.PMTheme
 import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Destination
 @Composable
-fun HomeScreen() {
+fun HomeScreen(
+    navigator: DestinationsNavigator
+) {
     val viewModel : HomeViewModel = hiltViewModel()
-    val projects = listOf(
-        Project("Product Launch 2023", "Due 2/28/23"),
-        Project("Data Center Expansion", "Due 12/30/22"),
-        Project("Q4 Sales Campaign", "Due 11/10/22"),
-        Project("Board of Directors Meeting", "Due 1/20/23")
-    )
 
+    val listOfProjects =  viewModel.listOfProjects.toList()
+
+    LaunchedEffect(viewModel.refreshList.value) {
+        viewModel.fetchProjects()
+    }
     Scaffold(
         floatingActionButton = {
             FloatingAddButton(onClick = {
             /* handle add project click */
             //navController.navigate(route = "new_project_screen")
+                navigator.navigate(CreateProjectScreenDestination)
             })
         },
         topBar = {
             TopAppBar(
                 title = { Text(text = "Home") },
                 actions = {
-                    IconButton(onClick = { /*TODO*/ }) {
-                        //got o account
+                    IconButton(onClick = {
+                        navigator.navigate(AccountScreenDestination)
+                    }) {
+                        //got to account
                         Icon(imageVector = Icons.Default.AccountCircle, contentDescription = "account")
                     }
-                    IconButton(onClick = { /*TODO*/ }) {
+                    IconButton(onClick = {
+                        navigator.navigate(ArchivedProjectsScreenDestination)
+                    }) {
                         //go to archived
                         Icon(imageVector = Icons.Filled.List, contentDescription = "Archive")
                     }
@@ -81,21 +96,34 @@ fun HomeScreen() {
                 modifier = Modifier.padding(start = 10.dp,16.dp)
             )
 
-            Text(text = "My Access Token : \n ${viewModel.token.value}")
+            TextButton(onClick = { viewModel.refreshList.value + 1}) {
+                Text(text = "Click to refresh list...")
+            }
+            
+            if (listOfProjects.isNotEmpty()){
+                LazyColumn (
+                    modifier = Modifier.padding(10.dp)
+                ){
 
-            LazyColumn (
-                modifier = Modifier.padding(10.dp)
-            ){
-                items(projects) { project ->
-                    ProjectItem(project = project, onClick = { /* handle project item click */ })
+                    items(listOfProjects) { project ->
+                        ProjectItem(project = project, onClick = { /* handle project item click */ })
+                    }
+                }
+            }else{
+                Column(modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally) {
+
+                    Text(text = "You do not have any projects currently\nClick button below to create")
                 }
             }
+            
         }
     }
 }
 
 @Composable
-fun ProjectItem(project: Project, onClick: () -> Unit) {
+fun ProjectItem(project: com.forsythe.pm.models.Project, onClick: () -> Unit) {
     Column {
         Row(
             modifier = Modifier
@@ -108,8 +136,8 @@ fun ProjectItem(project: Project, onClick: () -> Unit) {
             Column(
                 modifier = Modifier.weight(1f)
             ) {
-                Text(text = project.name, fontSize = 16.sp, fontWeight = FontWeight.Bold)
-                Text(text = project.dueDate, fontSize = 14.sp, color = Color.Gray)
+                Text(text = project.Name, fontSize = 16.sp, fontWeight = FontWeight.Bold)
+                Text(text = project.CreatedAt, fontSize = 14.sp, color = Color.Gray)
             }
             IconButton(onClick = onClick) {
                 Icon(

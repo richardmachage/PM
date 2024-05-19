@@ -1,9 +1,10 @@
 package com.forsythe.pm.models
 
-data class User(
-    val username: String,
-    val email: String,
-    val phone: String,
-    val password: String,
-    val confirm_password: String
+import java.util.UUID
+
+data class UserDetails(
+    val Uuid: String,
+    val Username: String,
+    val Email: String,
+    val Phone: String,
 )

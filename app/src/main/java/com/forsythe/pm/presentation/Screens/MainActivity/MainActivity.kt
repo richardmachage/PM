@@ -16,6 +16,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -30,6 +31,7 @@ import com.forsythe.pm.data.sharedPreferences.ACCESS_TOKEN_KEY
 import com.forsythe.pm.data.sharedPreferences.PreferencesRepo
 import com.forsythe.pm.presentation.Screens.LogInScreen.LoginScreen
 import com.forsythe.pm.presentation.Screens.NavGraphs
+import com.forsythe.pm.presentation.Screens.destinations.HomeScreenDestination
 import com.forsythe.pm.presentation.navigation.SetNavGraph
 import com.forsythe.pm.presentation.ui.theme.PMTheme
 import com.ramcosta.composedestinations.DestinationsNavHost
@@ -42,15 +44,19 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-
         val preferencesRepo =  PreferencesRepo( context = applicationContext)
-
+        val token = preferencesRepo.loadData(ACCESS_TOKEN_KEY)?:""
         setContent {
-
+            
             PMTheme {
                // navHostController = rememberNavController()
                 //SetNavGraph(navHostController = navHostController)
-                DestinationsNavHost(navGraph = NavGraphs.root)
+                if (token.isNotBlank()){
+                    DestinationsNavHost(startRoute = HomeScreenDestination, navGraph = NavGraphs.root)
+                }else{
+                    DestinationsNavHost(navGraph = NavGraphs.root)
+                }
+                //DestinationsNavHost(navGraph = NavGraphs.root)
             }
         }
     }

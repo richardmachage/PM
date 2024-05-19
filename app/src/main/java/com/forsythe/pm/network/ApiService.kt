@@ -1,13 +1,13 @@
 package com.forsythe.pm.network
 
-import com.forsythe.pm.models.ApiResponse
+import com.forsythe.pm.models.CreateProjectRequest
+import com.forsythe.pm.models.CreateProjectResponse
 import com.forsythe.pm.models.LoginCredentials
 import com.forsythe.pm.models.LoginResponse
-import com.forsythe.pm.models.Project
 import com.forsythe.pm.models.ProjectsResponse
 import com.forsythe.pm.models.RegisterRequest
 import com.forsythe.pm.models.RegisterResponse
-import com.forsythe.pm.models.User
+import com.forsythe.pm.models.UserDetailsResponse
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -23,5 +23,12 @@ interface ApiService {
 
     @GET("projects")
     fun listProjects(@Header("Authorization") token: String): Call<ProjectsResponse>
+
+    @POST("projects")
+    fun createProject(@Header("Authorization") token: String, @Body request: CreateProjectRequest):Call<CreateProjectResponse>
+
+    @GET("current_user")
+    fun getCurrentUser(@Header("Authorization") token: String): Call<UserDetailsResponse>
+
 
 }

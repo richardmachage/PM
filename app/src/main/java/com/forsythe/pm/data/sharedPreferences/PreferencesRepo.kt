@@ -2,6 +2,7 @@ package com.forsythe.pm.data.sharedPreferences
 
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.core.content.edit
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
@@ -23,5 +24,12 @@ class PreferencesRepo @Inject constructor(
 
     fun loadData(key:String):String?{
         return sharedPreferences.getString(key,"")
+    }
+
+    fun removeData(key:String){
+        with(sharedPreferences.edit()){
+            remove(key)
+            apply()
+        }
     }
 }

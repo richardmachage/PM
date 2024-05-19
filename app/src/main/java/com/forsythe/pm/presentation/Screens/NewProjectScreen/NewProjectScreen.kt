@@ -1,5 +1,6 @@
 package com.forsythe.pm.presentation.Screens.NewProjectScreen
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -19,6 +20,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -26,23 +28,34 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.forsythe.pm.presentation.others.MyCircularProgressBar
 import com.forsythe.pm.presentation.ui.theme.PMTheme
 import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Destination
 @Composable
-fun CreateProjectScreen() {
-    var projectName by remember { mutableStateOf("") }
-    var projectDescription by remember { mutableStateOf("") }
+fun CreateProjectScreen(
+    navigator: DestinationsNavigator
+) {
+    val viewModel :NewProjectViewModel = hiltViewModel()
+    val context = LocalContext.current
 
-
+    LaunchedEffect(viewModel.toastMessage.value) {
+        val message = viewModel.toastMessage.value
+        if (message.isNotBlank()){
+            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+        }
+    }
     Scaffold(
         containerColor = MaterialTheme.colorScheme.surface,
         topBar = {
@@ -57,7 +70,7 @@ fun CreateProjectScreen() {
                 navigationIcon = {
                     IconButton(onClick = {
                     /* handle close click */
-                       // navController.navigateUp()
+                       navigator.navigateUp()
                     }) {
                         Icon(
                             imageVector = Icons.Default.Close,
@@ -68,6 +81,7 @@ fun CreateProjectScreen() {
             )
         },
         content = { padding ->
+            MyCircularProgressBar(isLoading = viewModel.isLoading.value)
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -76,7 +90,7 @@ fun CreateProjectScreen() {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = "Name",
+                    text = "Project Name",
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.align(Alignment.Start)
@@ -85,8 +99,8 @@ fun CreateProjectScreen() {
                 Spacer(modifier = Modifier.height(8.dp))
 
                 MyBasicBigInputTextField(
-                    value = projectName,
-                    onValueChange = { projectName = it },
+                    value = viewModel.projectName.value,
+                    onValueChange = { viewModel.projectName.value = it },
                     placeholder = "Project name"
                 )
 
@@ -102,8 +116,8 @@ fun CreateProjectScreen() {
                 Spacer(modifier = Modifier.height(8.dp))
 
                 MyBasicBigInputTextField(
-                    value = projectDescription,
-                    onValueChange = { projectDescription = it },
+                    value = viewModel.projectDescription.value,
+                    onValueChange = { viewModel.projectDescription.value = it },
                     placeholder = "Project description",
                     singleLine = false,
                     maxLines = 5
@@ -113,7 +127,7 @@ fun CreateProjectScreen() {
 
                 Button(
                     onClick = { /* handle create project click */
-                    //          navController.navigate(route = "home_screen")
+                              viewModel.createProject()
                               },
                     modifier = Modifier
                         .fillMaxWidth()
