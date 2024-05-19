@@ -4,6 +4,7 @@ import com.forsythe.pm.models.CreateProjectRequest
 import com.forsythe.pm.models.CreateProjectResponse
 import com.forsythe.pm.models.LoginCredentials
 import com.forsythe.pm.models.LoginResponse
+import com.forsythe.pm.models.ProjectDetailsResponse
 import com.forsythe.pm.models.ProjectsResponse
 import com.forsythe.pm.models.RegisterRequest
 import com.forsythe.pm.models.RegisterResponse
@@ -13,6 +14,7 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
+import retrofit2.http.Path
 
 interface ApiService {
     @POST("register")
@@ -30,5 +32,6 @@ interface ApiService {
     @GET("current_user")
     fun getCurrentUser(@Header("Authorization") token: String): Call<UserDetailsResponse>
 
-
+    @GET("projects/{id}")
+    fun getProjectDetails(@Header("Authorization") token: String, @Path("id") projectId: String): Call<ProjectDetailsResponse>
 }

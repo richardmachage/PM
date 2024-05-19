@@ -4,3 +4,4 @@ data class ArchivedAt(
     val Time: String,
     val Valid: Boolean
 )
+
