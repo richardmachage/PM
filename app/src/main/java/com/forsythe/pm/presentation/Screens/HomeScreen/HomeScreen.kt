@@ -37,6 +37,7 @@ import com.forsythe.pm.presentation.Screens.AccountScreen.AccountScreen
 import com.forsythe.pm.presentation.Screens.destinations.AccountScreenDestination
 import com.forsythe.pm.presentation.Screens.destinations.ArchivedProjectsScreenDestination
 import com.forsythe.pm.presentation.Screens.destinations.CreateProjectScreenDestination
+import com.forsythe.pm.presentation.Screens.destinations.ProjectDetailsScreenDestination
 import com.forsythe.pm.presentation.others.FloatingAddButton
 import com.forsythe.pm.presentation.ui.theme.PMTheme
 import com.ramcosta.composedestinations.annotation.Destination
@@ -106,7 +107,17 @@ fun HomeScreen(
                 ){
 
                     items(listOfProjects) { project ->
-                        ProjectItem(project = project, onClick = { /* handle project item click */ })
+                        ProjectItem(
+                            project = project,
+                            onClick = {
+                            navigator.navigate(ProjectDetailsScreenDestination(
+                                projectId = project.Uuid,
+                                name =  project.Name,
+                                createdAt = project.CreatedAt,
+                                description = project.Description
+                            )
+                            )
+                        })
                     }
                 }
             }else{

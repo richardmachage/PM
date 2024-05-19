@@ -1,5 +1,6 @@
 package com.forsythe.pm.presentation.Screens.ProjectDetails
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -22,32 +23,65 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.forsythe.pm.presentation.ui.theme.PMTheme
+import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
 @OptIn(ExperimentalMaterial3Api::class)
+@Destination
 @Composable
 fun ProjectDetailsScreen(
-    tasks: List<String> = listOf(
+    navigator: DestinationsNavigator,
+    projectId: String,
+    name: String,
+    createdAt: String,
+    description: String
+
+) {
+    val viewModel: ProjectDetailsViewModel = hiltViewModel()
+    val context = LocalContext.current
+    val tasks = listOf(
         "Create homepage design",
         "Create about page design",
         "Create contact page design"
     )
 
-) {
+    var launchKey by remember {
+        mutableStateOf(0)
+    }
+
+    LaunchedEffect(launchKey) {
+        viewModel.fetchProjectDetails(projectId = projectId)
+    }
+
+    LaunchedEffect(viewModel.toastMessage.value) {
+        if (viewModel.toastMessage.value.isNotBlank()) {
+            Toast.makeText(context, viewModel.toastMessage.value, Toast.LENGTH_SHORT).show()
+            viewModel.toastMessage.value = ""
+        }
+    }
     PMTheme {
+        launchKey + 1
         Scaffold(
             topBar = {
                 TopAppBar(title = { Text(text = "Project Details") },
                     navigationIcon = {
                         IconButton(onClick = {
-                            //navigator.navigateUp()
+                            navigator.navigateUp()
                         }) {
                             Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "Back")
                         }
@@ -67,28 +101,29 @@ fun ProjectDetailsScreen(
                         .padding(16.dp)
                 ) {
                     Text(
-                        text = "title",
+                        text = name,
                         fontSize = 24.sp,
                         fontWeight = FontWeight.Bold,
                         modifier = Modifier.padding(bottom = 8.dp)
                     )
+
                     Text(
-                        text = "description",
+                        text = description,
                         fontSize = 16.sp,
                         modifier = Modifier.padding(bottom = 16.dp)
                     )
                     Text(
-                        text = "Created on createdDate",
+                        text = "Created on $createdAt",
                         fontSize = 14.sp,
                         //color = Color.Gray,
                         modifier = Modifier.padding(bottom = 2.dp)
                     )
-                    Text(
+                    /*Text(
                         text = "created By John",
                         fontSize = 14.sp,
                         color = Color.Gray,
                         modifier = Modifier.padding(bottom = 16.dp)
-                    )
+                    )*/
                     Text(
                         text = "Associated tasks (${tasks.size})",
                         fontSize = 18.sp,
@@ -137,6 +172,6 @@ fun ProjectDetailsScreen(
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun ProjectDetailsPrev(){
-    ProjectDetailsScreen( )
+fun ProjectDetailsPrev() {
+    //ProjectDetailsScreen( )
 }

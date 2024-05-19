@@ -34,10 +34,13 @@ androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-man
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 animation = {module = "androidx.compose.animation:animation", name = "animation", version = "1.4.3"}
+
+#Retfofit
 retrofit = { module = "com.squareup.retrofit2:retrofit", name = "retrofit",version.ref = "retrofit" }
 moshiConverter = { module = "com.squareup.retrofit2:converter-moshi", name = "moshiConverter", version.ref = "retrofit" }
 moshiKotlin = {module = "com.squareup.moshi:moshi-kotlin", name = "moshiKotlin", version.ref = "moshiKotlin"}
 kotlinReflect = {module = "com.squareup.moshi:moshi-kotlin", name="kotlinReflection", version.ref = "kotlinReflect"}
+moshiCodgen = {module = "com.squareup.moshi:moshi-kotlin-codegen", name="moshiCodGen", version.ref="moshiKotlin"}
 
 #compose destinations
 composeDestinations = {module = "io.github.raamcosta.compose-destinations:core", name= "composeDestinations", version.ref = "composeDestinations"}

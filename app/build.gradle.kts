@@ -88,6 +88,7 @@ dependencies {
     implementation(libs.moshiConverter)
     implementation(libs.moshiKotlin)
     implementation(libs.kotlinReflect)
+    ksp(libs.moshiCodgen)
 
     //navigation
     implementation(libs.composeNav)

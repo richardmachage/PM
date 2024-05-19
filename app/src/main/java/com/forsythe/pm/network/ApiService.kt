@@ -33,5 +33,8 @@ interface ApiService {
     fun getCurrentUser(@Header("Authorization") token: String): Call<UserDetailsResponse>
 
     @GET("projects/{id}")
-    fun getProjectDetails(@Header("Authorization") token: String, @Path("id") projectId: String): Call<ProjectDetailsResponse>
+    fun getProjectDetails(
+        @Header("Authorization") token: String,
+        @Path("id") projectId: String
+    ): Call<ProjectDetailsResponse>
 }
